@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "yoobee_car_rental"
+version = "0.1.0"
+description = "Car rental service package"
+authors = [{ name = "Your Name", email = "your.email@example.com" }]
+readme = "README.md"
+license = { text = "MIT" }
+dependencies = [
+    "requests",
+    "pytest"
+]
+
+[project.scripts]
+"main1.py" = "scripts:car_rental_entry"
+
+[tool.setuptools]
+packages = ["src/rental_services", "src/common", "src/domain", "src/infrastructure", "scripts"]
