@@ -1,11 +1,9 @@
-# src/domain/service/common_service.py
-
 import hashlib
 import re
 from datetime import datetime
 
 class CommonService:
-    """Provides common utilities for hashing and validation."""
+    """Provides common utilities."""
 
     def hash_password(self, password):
         """Hashes a password using SHA-256."""

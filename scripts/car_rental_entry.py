@@ -1,10 +1,11 @@
-from rental_services.start_up import StartUp
+from rental_services.startup import Startup
 from rental_services.login_controller import LoginController
 from rental_services.registration_controller import RegistrationController
 
 def main():
     """Main function to handle user choice and input."""
-    start_up = StartUp()
+    #Run rental services startup  
+    startup = Startup()
     login_controller = LoginController()
     registration_controller = RegistrationController()
 
@@ -19,7 +20,7 @@ def main():
         if choice == "1":
             username = input("Enter username (email): ").strip()
             password = input("Enter password: ").strip()
-            login_controller.login(username, password)  # Call login
+            login_controller.login(username, password)  
 
         elif choice == "2":
             print("\nUser Registration:")

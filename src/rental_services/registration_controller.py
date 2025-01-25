@@ -1,5 +1,3 @@
-# src/rental_services/registration_controller.py
-
 from domain.service.common_service import CommonService
 from infrastructure.models.user  import User
 from infrastructure.repositories.user_repository import UserRepository

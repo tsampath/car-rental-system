@@ -1,5 +1,3 @@
-# src/rental_services/login_controller.py
-
 from domain.service.common_service import CommonService
 
 class LoginController:
