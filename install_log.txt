@@ -1,0 +1,72 @@
+Using pip 24.3.1 from C:\Users\tan\AppData\Local\Programs\Python\Python310\lib\site-packages\pip (python 3.10)
+Obtaining file:///D:/repos/car-rental-system
+  Installing build dependencies: started
+  Running command pip subprocess to install build dependencies
+  Using pip 24.3.1 from C:\Users\tan\AppData\Local\Programs\Python\Python310\Lib\site-packages\pip (python 3.10)
+  Collecting setuptools>=61.0
+    Obtaining dependency information for setuptools>=61.0 from https://files.pythonhosted.org/packages/69/8a/b9dc7678803429e4a3bc9ba462fa3dd9066824d3c607490235c6a796be5a/setuptools-75.8.0-py3-none-any.whl.metadata
+    Using cached setuptools-75.8.0-py3-none-any.whl.metadata (6.7 kB)
+  Collecting wheel
+    Obtaining dependency information for wheel from https://files.pythonhosted.org/packages/0b/2c/87f3254fd8ffd29e4c02732eee68a83a1d3c346ae39bc6822dcbcb697f2b/wheel-0.45.1-py3-none-any.whl.metadata
+    Using cached wheel-0.45.1-py3-none-any.whl.metadata (2.3 kB)
+  Collecting setuptools_scm
+    Obtaining dependency information for setuptools_scm from https://files.pythonhosted.org/packages/a0/b9/1906bfeb30f2fc13bb39bf7ddb8749784c05faadbd18a21cf141ba37bff2/setuptools_scm-8.1.0-py3-none-any.whl.metadata
+    Using cached setuptools_scm-8.1.0-py3-none-any.whl.metadata (6.6 kB)
+  Collecting packaging>=20 (from setuptools_scm)
+    Obtaining dependency information for packaging>=20 from https://files.pythonhosted.org/packages/88/ef/eb23f262cca3c0c4eb7ab1933c3b1f03d021f2c48f54763065b6f0e321be/packaging-24.2-py3-none-any.whl.metadata
+    Using cached packaging-24.2-py3-none-any.whl.metadata (3.2 kB)
+  Collecting tomli>=1 (from setuptools_scm)
+    Obtaining dependency information for tomli>=1 from https://files.pythonhosted.org/packages/6e/c2/61d3e0f47e2b74ef40a68b9e6ad5984f6241a942f7cd3bbfbdbd03861ea9/tomli-2.2.1-py3-none-any.whl.metadata
+    Using cached tomli-2.2.1-py3-none-any.whl.metadata (10 kB)
+  Using cached setuptools-75.8.0-py3-none-any.whl (1.2 MB)
+  Using cached wheel-0.45.1-py3-none-any.whl (72 kB)
+  Using cached setuptools_scm-8.1.0-py3-none-any.whl (43 kB)
+  Using cached packaging-24.2-py3-none-any.whl (65 kB)
+  Using cached tomli-2.2.1-py3-none-any.whl (14 kB)
+  Installing collected packages: wheel, tomli, setuptools, packaging, setuptools_scm
+    Creating C:\Users\tan\AppData\Local\Temp\pip-build-env-ccmplhut\overlay\Scripts
+  Successfully installed packaging-24.2 setuptools-75.8.0 setuptools_scm-8.1.0 tomli-2.2.1 wheel-0.45.1
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Running command Checking if build backend supports build_editable
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Running command Getting requirements to build editable
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Running command Preparing editable metadata (pyproject.toml)
+  Traceback (most recent call last):
+    File "C:\Users\tan\AppData\Local\Programs\Python\Python310\lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 353, in <module>
+      main()
+    File "C:\Users\tan\AppData\Local\Programs\Python\Python310\lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 335, in main
+      json_out['return_val'] = hook(**hook_input['kwargs'])
+    File "C:\Users\tan\AppData\Local\Programs\Python\Python310\lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 181, in prepare_metadata_for_build_editable
+      return hook(metadata_directory, config_settings)
+    File "C:\Users\tan\AppData\Local\Temp\pip-build-env-ccmplhut\overlay\Lib\site-packages\setuptools\build_meta.py", line 488, in prepare_metadata_for_build_editable
+      return self.prepare_metadata_for_build_wheel(
+    File "C:\Users\tan\AppData\Local\Temp\pip-build-env-ccmplhut\overlay\Lib\site-packages\setuptools\build_meta.py", line 379, in prepare_metadata_for_build_wheel
+      self._bubble_up_info_directory(metadata_directory, ".egg-info")
+    File "C:\Users\tan\AppData\Local\Temp\pip-build-env-ccmplhut\overlay\Lib\site-packages\setuptools\build_meta.py", line 348, in _bubble_up_info_directory
+      info_dir = self._find_info_directory(metadata_directory, suffix)
+    File "C:\Users\tan\AppData\Local\Temp\pip-build-env-ccmplhut\overlay\Lib\site-packages\setuptools\build_meta.py", line 359, in _find_info_directory
+      assert len(candidates) == 1, f"Multiple {suffix} directories found"
+  AssertionError: Multiple .egg-info directories found
+  error: subprocess-exited-with-error
+  
+  Preparing editable metadata (pyproject.toml) did not run successfully.
+  exit code: 1
+  
+  See above for output.
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+  full command: 'C:\Users\tan\AppData\Local\Programs\Python\Python310\python.exe' 'C:\Users\tan\AppData\Local\Programs\Python\Python310\lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py' prepare_metadata_for_build_editable 'C:\Users\tan\AppData\Local\Temp\tmp3wnvtl_1'
+  cwd: D:\repos\car-rental-system
+  Preparing editable metadata (pyproject.toml): finished with status 'error'
+error: metadata-generation-failed
+
+Encountered error while generating package metadata.
+
+See above for output.
+
+note: This is an issue with the package mentioned above, not pip.
+hint: See above for details.

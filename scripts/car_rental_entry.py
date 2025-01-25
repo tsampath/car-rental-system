@@ -1,17 +1,49 @@
-import sys
-import os
-
-# Get the absolute path of the project root and add 'src' to sys.path
-current_dir = os.path.dirname(os.path.abspath(__file__))
-src_path = os.path.normpath(os.path.join(current_dir, "..", "src"))  # Cross-platform path handling
-sys.path.insert(0, src_path)  # Ensure 'src' is in sys.path
-
-from rental_services.login import login  # Now it should work
+from rental_services.start_up import StartUp
+from rental_services.login_controller import LoginController
+from rental_services.registration_controller import RegistrationController
 
 def main():
-    """Main function for car rental script."""
-    print("Starting Car Rental Application...")
-    login()
+    """Main function to handle user choice and input."""
+    start_up = StartUp()
+    login_controller = LoginController()
+    registration_controller = RegistrationController()
+
+    while True:
+        print("\nWelcome to Yoobee Car Rental!")
+        print("1. Login")
+        print("2. Register")
+        print("3. Exit")
+        
+        choice = input("Please select an option (1/2/3): ").strip()
+
+        if choice == "1":
+            username = input("Enter username (email): ").strip()
+            password = input("Enter password: ").strip()
+            login_controller.login(username, password)  # Call login
+
+        elif choice == "2":
+            print("\nUser Registration:")
+            first_name = input("Enter First Name: ").strip()
+            last_name = input("Enter Last Name: ").strip()
+            dob = input("Enter Date of Birth (YYYY-MM-DD): ").strip()
+            username = input("Enter Username (Email): ").strip()
+            
+            # Ensure password confirmation
+            while True:
+                password = input("Enter Password: ").strip()
+                confirm_password = input("Confirm Password: ").strip()
+                if password == confirm_password:
+                    break
+                print("Error: Passwords do not match. Please try again.")
+
+            registration_controller.register(first_name, last_name, dob, username, password)  # Call register
+
+        elif choice == "3":
+            print("Thank you for using Yoobee Car Rental! Goodbye.")
+            break  # Exit loop
+        
+        else:
+            print("Invalid selection. Please choose again.")
 
 if __name__ == "__main__":
     main()
