@@ -14,6 +14,8 @@ setup(
         "requests",
         "pytest",
         "alembic",
-        "pymysql"
+        "pymysql",
+        "pydantic",
+        "pydantic[email]"
     ],
 )

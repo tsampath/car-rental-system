@@ -1,6 +1,6 @@
 from rental_services.startup import Startup
-from rental_services.login_controller import LoginController
-from rental_services.registration_controller import RegistrationController
+from rental_services.controllers.login_controller import LoginController
+from rental_services.controllers.registration_controller import RegistrationController
 
 def main():
     """Main function to handle user choice and input."""
@@ -20,7 +20,7 @@ def main():
         if choice == "1":
             username = input("Enter username (email): ").strip()
             password = input("Enter password: ").strip()
-            login_controller.login(username, password)  
+            login_controller.login(username, password) 
 
         elif choice == "2":
             print("\nUser Registration:")
@@ -29,6 +29,10 @@ def main():
             dob = input("Enter Date of Birth (YYYY-MM-DD): ").strip()
             username = input("Enter Username (Email): ").strip()
             
+            # Check for empty fields
+            if not all([first_name, last_name, dob, username]):
+                print("Error: All fields are required.")
+
             # Ensure password confirmation
             while True:
                 password = input("Enter Password: ").strip()
@@ -37,7 +41,15 @@ def main():
                     break
                 print("Error: Passwords do not match. Please try again.")
 
-            registration_controller.register(first_name, last_name, dob, username, password)  # Call register
+            user_data = {
+                "first_name": first_name,
+                "last_name": last_name,
+                "dob": dob,
+                "username": username,
+                "password": password
+            }
+
+            registration_controller.register_user(user_data)  # Call register
 
         elif choice == "3":
             print("Thank you for using Yoobee Car Rental! Goodbye.")

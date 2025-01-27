@@ -1,8 +1,10 @@
 import hashlib
 import re
-from datetime import datetime
+from datetime import datetime 
 
-class CommonService:
+from domain.interfaces.i_common_service import ICommonService
+
+class CommonService(ICommonService):
     """Provides common utilities."""
 
     def hash_password(self, password):

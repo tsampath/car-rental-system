@@ -1,11 +1,12 @@
-from sqlalchemy import Column, String, DateTime
+from sqlalchemy import Column, String, DateTime, BINARY
 from sqlalchemy.sql import func
 from .base_model import BaseModel
 
-class User(BaseModel):
-    """User model for registration."""
+class UserModel(BaseModel):
+    """User database model."""
     __tablename__ = "users"
 
+    id = Column(BINARY(16), primary_key=True, unique=True, nullable=False)
     first_name = Column(String(50), nullable=False)
     last_name = Column(String(50), nullable=False)
     dob = Column(DateTime, nullable=False)

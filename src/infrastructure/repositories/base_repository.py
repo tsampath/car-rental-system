@@ -1,7 +1,9 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 
-class BaseRepository:
+from domain.interfaces.i_base_repository import IBaseRepository
+
+class BaseRepository(IBaseRepository):
     """Base repository providing common database operations."""
     def __init__(self, model, session: Session):
         self.model = model
