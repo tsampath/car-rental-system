@@ -18,6 +18,10 @@ class IUserService(ABC):
         pass
 
     @abstractmethod
+    def get_user_by_email(self, email: str) -> UserEntity:
+        pass
+    
+    @abstractmethod
     def delete_user_by_id(self, user_id: str) -> bool:
         pass
 
