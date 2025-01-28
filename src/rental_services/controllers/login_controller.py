@@ -1,4 +1,4 @@
-from domain.service.common_service import CommonService
+from domain.services.common_service import CommonService
 
 class LoginController:
     """Handles user login."""

@@ -1,16 +1,16 @@
-from domain.service.common_service import CommonService
+from domain.services.common_service import CommonService
 from domain.entities.user_entity import UserEntity
-from infrastructure.services.user_service import UserService
-from infrastructure.db.mysql_db_connection import DB_Connection
+from domain.services.user_service import UserService
+from rental_services.service_locator import ServiceLocator
 
 class RegistrationController:
-    """Handles user registration."""
+    """Controller for user registration and related operations."""
 
     def __init__(self):
         self.common_service = CommonService()
-        # Get session and UserService        
-        self.session = DB_Connection().get_session()
-        self.user_service = UserService(self.session)
+
+        """Initialize RegistrationController with UserService."""
+        self.user_service: UserService = ServiceLocator.get_user_service()
 
     def register_user(self, user_data: dict) -> UserEntity:
         """Handles new user registration."""

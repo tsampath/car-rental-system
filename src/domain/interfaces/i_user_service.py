@@ -1,17 +1,26 @@
-# from abc import ABC, abstractmethod
-# from typing import Any, List
+from abc import ABC, abstractmethod
+from typing import List
+from domain.entities.user_entity import UserEntity
 
-# from domain.
+class IUserService(ABC):
+    """Interface for UserService."""
 
-# class IUserService(ABC):
-#     """
-#     An abstract base class serving as a 'user service interface'
-#     """
+    @abstractmethod
+    def add_user(self, user_entity: UserEntity) -> UserEntity:
+        pass
 
-#     @abstractmethod
-#     def add(self, user: Any) -> Any:
-#         """
-#         Persist the entity to the data store.
-#         Returns the saved entity or an identifier.
-#         """
-#         pass
+    @abstractmethod
+    def get_all_users(self) -> List[UserEntity]:
+        pass
+
+    @abstractmethod
+    def get_user_by_id(self, user_id: str) -> UserEntity:
+        pass
+
+    @abstractmethod
+    def delete_user_by_id(self, user_id: str) -> bool:
+        pass
+
+    @abstractmethod
+    def update_user_by_id(self, user_id: str, user_entity: UserEntity) -> UserEntity:
+        pass
