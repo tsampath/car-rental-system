@@ -1,62 +1,50 @@
-from rental_services.startup import Startup
-from rental_services.controllers.login_controller import LoginController
+# scripts/car_rental_entry.py
+
 from rental_services.controllers.registration_controller import RegistrationController
+from rental_services.controllers.login_controller import LoginController
 
 def main():
-    """Main function to handle user choice and input."""
-    #Run rental services startup  
-    startup = Startup()
-    login_controller = LoginController()
+    """Main entry point."""
     registration_controller = RegistrationController()
+    login_controller = LoginController()
 
     while True:
         print("\nWelcome to Yoobee Car Rental!")
         print("1. Login")
         print("2. Register")
         print("3. Exit")
-        
         choice = input("Please select an option (1/2/3): ").strip()
 
         if choice == "1":
-            username = input("Enter username (email): ").strip()
-            password = input("Enter password: ").strip()
-            login_controller.login(username, password) 
+            # Login
+            email = input("Enter Email: ").strip()
+            password = input("Enter Password: ").strip()
+            login_controller.login_user(email, password)
 
         elif choice == "2":
-            print("\nUser Registration:")
-            first_name = input("Enter First Name: ").strip()
-            last_name = input("Enter Last Name: ").strip()
-            dob = input("Enter Date of Birth (YYYY-MM-DD): ").strip()
-            username = input("Enter Username (Email): ").strip()
-            
-            # Check for empty fields
-            if not all([first_name, last_name, dob, username]):
-                print("Error: All fields are required.")
-
-            # Ensure password confirmation
-            while True:
-                password = input("Enter Password: ").strip()
-                confirm_password = input("Confirm Password: ").strip()
-                if password == confirm_password:
-                    break
-                print("Error: Passwords do not match. Please try again.")
-
+            # Register
             user_data = {
-                "first_name": first_name,
-                "last_name": last_name,
-                "dob": dob,
-                "username": username,
-                "password": password
+                "first_name": input("Enter First Name: ").strip(),
+                "last_name": input("Enter Last Name: ").strip(),
+                "dob": input("Enter Date of Birth (YYYY-MM-DD): ").strip(),
+                "email": input("Enter Email: ").strip(),
+                "password": input("Enter Password: ").strip()
             }
 
-            registration_controller.register_user(user_data)  # Call register
+            # Confirm password
+            confirm_password = input("Confirm Password: ").strip()
+            if confirm_password != user_data["password"]:
+                print("Error: Password confirmation does not match. Please try again.")
+                continue
+
+            registration_controller.register_user(user_data)
 
         elif choice == "3":
-            print("Thank you for using Yoobee Car Rental! Goodbye.")
-            break  # Exit loop
-        
+            print("Goodbye!")
+            break
+
         else:
-            print("Invalid selection. Please choose again.")
+            print("Invalid choice. Please try again.")
 
 if __name__ == "__main__":
     main()

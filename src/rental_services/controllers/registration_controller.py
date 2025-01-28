@@ -16,7 +16,7 @@ class RegistrationController:
         """Handles new user registration."""
         
         # Validate email
-        if not self.common_service.validate_email(user_data['username']):
+        if not self.common_service.validate_email(user_data['email']):
             print("Error: Invalid email format. Please enter a valid email.")
             return
         
@@ -35,7 +35,7 @@ class RegistrationController:
             first_name = user_data['first_name'],
             last_name = user_data['last_name'],
             dob = user_data['dob'],
-            email = user_data['username'],
+            email = user_data['email'],
             password = hashed_password
         )
         self.user_service.add_user(new_user)

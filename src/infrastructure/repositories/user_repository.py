@@ -1,5 +1,3 @@
-# src/infrastructure/repositories/user_repository.py
-
 from infrastructure.models.user_model import UserModel
 from domain.entities.user_entity import UserEntity
 from domain.interfaces.i_user_repository import IUserRepository
@@ -10,6 +8,11 @@ class UserRepository(BaseRepository[UserModel, UserEntity], IUserRepository):
 
     def __init__(self, session):
         super().__init__(UserModel, session)
+
+    def get_by_email(self, email: str) -> UserEntity:
+        """Retrieve a user by email."""
+        record = self.session.query(UserModel).filter_by(email=email).first()
+        return self.to_entity(record) if record else None
 
     def to_model(self, entity: UserEntity) -> UserModel:
         """Convert UserEntity to UserModel."""
