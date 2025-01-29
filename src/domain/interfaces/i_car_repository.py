@@ -41,13 +41,18 @@ class ICarRepository(ABC):
         pass
 
     @abstractmethod
-    def get_by_model(self, model: str) -> CarEntity:
+    def get_by_model(self, model: str) -> List[CarEntity]:
         """Retrieve a Car by model."""
         pass
 
     @abstractmethod
-    def get_by_year(self, year: str) -> CarEntity:
+    def get_by_year(self, year: str) -> List[CarEntity]:
         """Retrieve a Car by year."""
+        pass
+
+    @abstractmethod
+    def get_by_availability(self, is_available: bool) -> List[CarEntity]:
+        """Retrieve a Car by availability."""
         pass
 
     @abstractmethod

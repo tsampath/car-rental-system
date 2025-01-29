@@ -1,3 +1,5 @@
+from typing import List
+
 from domain.services.common_service import CommonService
 from domain.entities.car_entity import CarEntity
 from domain.services.car_service import CarService
@@ -34,14 +36,34 @@ class CarController:
         """Get all registered cars."""
         return self.car_service.get_all_cars()
 
-    def get_car_by_id(self, car_id: str):
+    def get_car_by_id(self, id: str):
         """Get a car by ID."""
-        return self.car_service.get_car_by_id(car_id)
+        return self.car_service.get_car_by_id(id)
 
-    def delete_car_by_id(self, car_id: str):
+    def get_car_by_car_id(self, car_id: str) -> CarEntity:
+        """Get a car by ID."""
+        return self.car_service.get_car_by_car_id(car_id)
+
+    def delete_car_by_id(self, id: str):
         """Delete a car by ID."""
-        return self.car_service.delete_car_by_id(car_id)
+        return self.car_service.delete_car_by_id(id)
 
-    def update_car_by_id(self, car_id: str, car_data: dict):
+    def update_car_by_id(self, id: str, car_data: dict):
         """Update a car by ID."""
-        return self.car_service.update_car_by_id(car_id, CarEntity(**car_data))
+        return self.car_service.update_car_by_id(id, CarEntity(**car_data))
+    
+    def get_by_make(self, make: str) -> List[CarEntity]:
+        """Retrieve a car by make."""
+        return self.car_service.get_by_make(make)
+
+    def get_car_by_model(self, model: str) -> List[CarEntity]:
+        """Retrieve a car by model."""
+        return self.car_service.get_car_by_model(model)
+
+    def get_car_by_year(self, year: str) -> List[CarEntity]:
+        """Retrieve a car by year."""
+        return self.car_service.get_car_by_year(year)    
+    
+    def get_car_by_availability(self, is_available: bool) -> List[CarEntity]:
+        """Retrieve a car by availability."""
+        return self.car_service.get_car_by_availability(is_available)

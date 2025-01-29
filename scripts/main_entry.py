@@ -1,12 +1,13 @@
 from rental_services.controllers.login_controller import LoginController
 from rental_services.controllers.registration_controller import RegistrationController
-import car_entry as car_entry
+from car_entry import CarEntry  
 import customer_entry as customer_entry
 
 def main():
     """Main entry point."""
     registration_controller = RegistrationController()
     login_controller = LoginController()
+    car_entry = CarEntry()
 
     is_logged_in = False
 

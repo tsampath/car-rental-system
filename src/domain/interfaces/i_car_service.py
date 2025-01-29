@@ -36,3 +36,7 @@ class ICarService(ABC):
     @abstractmethod
     def get_car_by_year(self, year: str) -> CarEntity:
         pass
+
+    @abstractmethod
+    def get_car_by_availability(self, is_available: bool) -> List[CarEntity]:
+        pass

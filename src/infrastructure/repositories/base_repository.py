@@ -30,7 +30,7 @@ class BaseRepository(Generic[TModel, TEntity]):
 
     def delete_by_id(self, entity_id: str) -> bool:
         """Delete a record by ID."""
-        record = self.session.query(self.model).get(entity_id)
+        record = self.session.query(self.model).get(entity_id.bytes)
         if record:
             self.session.delete(record)
             self.session.commit()
@@ -39,7 +39,7 @@ class BaseRepository(Generic[TModel, TEntity]):
 
     def update_by_id(self, entity_id: str, entity: TEntity) -> TEntity:
         """Update a record by ID with new data and return the updated entity."""
-        record = self.session.query(self.model).get(entity_id)
+        record = self.session.query(self.model).get(entity_id.bytes)
         if record:
             for key, value in entity.dict(exclude={"id"}).items():
                 setattr(record, key, value)
