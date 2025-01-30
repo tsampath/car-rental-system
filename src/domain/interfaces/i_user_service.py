@@ -7,24 +7,30 @@ class IUserService(ABC):
 
     @abstractmethod
     def add_user(self, user_entity: UserEntity) -> UserEntity:
+        """Add a new user."""
         pass
 
     @abstractmethod
-    def get_all_users(self) -> List[UserEntity]:
+    def get_all_users(self):
+        """Retrieve all users."""
         pass
 
     @abstractmethod
-    def get_user_by_id(self, user_id: str) -> UserEntity:
+    def get_user_by_id(self, id: int) -> UserEntity:
+        """Retrieve a user by ID."""
+        pass
+
+    @abstractmethod
+    def delete_user_by_id(self, id: int) -> bool:
+        """Delete a user by ID."""
+        pass
+
+    @abstractmethod
+    def update_user_by_id(self, id: int, user_entity: UserEntity) -> UserEntity:
+        """Update a user by ID."""
         pass
 
     @abstractmethod
     def get_user_by_email(self, email: str) -> UserEntity:
-        pass
-    
-    @abstractmethod
-    def delete_user_by_id(self, user_id: str) -> bool:
-        pass
-
-    @abstractmethod
-    def update_user_by_id(self, user_id: str, user_entity: UserEntity) -> UserEntity:
+        """Retrieve a user by email."""
         pass

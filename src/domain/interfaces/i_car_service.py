@@ -14,15 +14,19 @@ class ICarService(ABC):
         pass
 
     @abstractmethod
-    def get_car_by_id(self, car_id: str) -> CarEntity:
+    def get_car_by_id(self, id: int) -> CarEntity:
         pass
 
     @abstractmethod
-    def delete_car_by_id(self, car_id: str) -> bool:
+    def delete_car_by_id(self, id: int) -> bool:
         pass
 
     @abstractmethod
-    def update_car_by_id(self, car_id: str, car_entity: CarEntity) -> CarEntity:
+    def update_car_by_id(self, id: int, car_entity: CarEntity) -> CarEntity:
+        pass
+
+    @abstractmethod
+    def get_car_by_car_id(self, car_id: str) -> CarEntity:
         pass
 
     @abstractmethod

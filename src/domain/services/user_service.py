@@ -17,17 +17,17 @@ class UserService(IUserService):
         """Retrieve all users."""
         return self.user_repository.get_all()
 
-    def get_user_by_id(self, user_id: str) -> UserEntity:
+    def get_user_by_id(self, id: int) -> UserEntity:
         """Retrieve a user by ID."""
-        return self.user_repository.get_by_id(user_id)
+        return self.user_repository.get_by_id(id)
 
-    def delete_user_by_id(self, user_id: str) -> bool:
+    def delete_user_by_id(self, id: int) -> bool:
         """Delete a user by ID."""
-        return self.user_repository.delete_by_id(user_id)
+        return self.user_repository.delete_by_id(id)
 
-    def update_user_by_id(self, user_id: str, user_entity: UserEntity) -> UserEntity:
+    def update_user_by_id(self, id: int, user_entity: UserEntity) -> UserEntity:
         """Update a user by ID."""
-        return self.user_repository.update_by_id(user_id, user_entity)
+        return self.user_repository.update_by_id(id, user_entity)
 
     def get_user_by_email(self, email: str) -> UserEntity:
         """Retrieve a user by email."""

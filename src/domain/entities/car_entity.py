@@ -1,5 +1,3 @@
-from datetime import date
-from pydantic import EmailStr
 from domain.entities.base_entity import BaseEntity
 
 class CarEntity(BaseEntity):

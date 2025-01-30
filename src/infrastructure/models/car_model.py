@@ -4,9 +4,8 @@ from .base_model import BaseModel
 
 class CarModel(BaseModel):
     """Car database model."""
-    __tablename__ = "cars"
+    __tablename__ = "car"
 
-    id = Column(BINARY(16), primary_key=True, unique=True, nullable=False)
     car_id = Column(String(50), nullable=False)
     make = Column(String(50), nullable=False)
     model = Column(String(50), nullable=False)

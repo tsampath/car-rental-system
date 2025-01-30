@@ -16,17 +16,17 @@ class IUserRepository(ABC):
         pass
 
     @abstractmethod
-    def get_by_id(self, user_id: str) -> UserEntity:
+    def get_by_id(self, user_id: int) -> UserEntity:
         """Retrieve a user by ID."""
         pass
 
     @abstractmethod
-    def delete_by_id(self, user_id: str) -> bool:
+    def delete_by_id(self, user_id: int) -> bool:
         """Delete a user by ID."""
         pass
 
     @abstractmethod
-    def update_by_id(self, user_id: str, user_model: UserEntity) -> UserEntity:
+    def update_by_id(self, user_id: int, user_model: UserEntity) -> UserEntity:
         """Update a user by ID."""
         pass
 

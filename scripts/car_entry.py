@@ -1,4 +1,5 @@
 from tabulate import tabulate
+from typing import List
 
 from rental_services.controllers.car_controller import CarController
 # import main_entry as main_entry
@@ -39,16 +40,25 @@ class CarEntry():
 
     def search_cars(self) -> int:
         while True:
-            print("1. Search by Registration Number")
-            print("2. Search by Made")
-            print("3. Search by Model")
-            print("4. Search by Year")
-            print("5. View available cars")
-            print("6. Back to Previous Menu")
-            print("7. Back to Main Menu")
-            search_choice = input("Please select an option (1/2/3/4): ").strip()
+            print("1. Search all cars")
+            print("2. View available cars")
+            print("3. Search by Registration Number")
+            print("4. Search by Made")
+            print("5. Search by Model")
+            print("6. Search by Year")
+            print("7. Back to Previous Menu")
+            print("8. Back to Main Menu")
+            search_choice = input("Please select an option (1/2/3/4/5/6/7/8): ").strip()
             match search_choice:
                 case "1":
+                    filtered_cars = self.car_controller.get_all_cars()
+                    print(tabulate(self.convert_car_entities_to_table(filtered_cars), headers="keys", tablefmt="grid"))
+                    self.actions_on_selected_car()
+                case "2":
+                    filtered_cars = self.car_controller.get_car_by_availability(True)
+                    print(tabulate(self.convert_car_entities_to_table(filtered_cars), headers="keys", tablefmt="grid"))
+                    self.actions_on_selected_car()
+                case "3":
                     registration_number = input("Please enter registration number: ").strip()
                     filtered_cars = self.car_controller.get_car_by_car_id(registration_number)
                     if filtered_cars == None:
@@ -56,7 +66,7 @@ class CarEntry():
                     else:
                         print(tabulate(filtered_cars, headers="keys", tablefmt="fancy_grid"))
                         self.actions_on_selected_car()
-                case "2":
+                case "4":
                     made = input("Please enter made by: ").strip()
                     filtered_cars = self.car_controller.get_by_make(made)
                     if filtered_cars == None:
@@ -64,21 +74,25 @@ class CarEntry():
                     else:
                         print(tabulate(self.convert_car_entities_to_table(filtered_cars), headers="keys", tablefmt="grid"))
                         self.actions_on_selected_car()
-                case "3":
+                case "5":
                     model = input("Please enter model: ").strip()
                     filtered_cars = self.car_controller.get_car_by_model(model)
-                    print(tabulate(self.convert_car_entities_to_table(filtered_cars), headers="keys", tablefmt="grid"))
-                case "4":
+                    if filtered_cars == None:
+                        print("System was unable to find any car per filter criteria")
+                    else:
+                        print(tabulate(self.convert_car_entities_to_table(filtered_cars), headers="keys", tablefmt="grid"))
+                        self.actions_on_selected_car()
+                case "6":
                     year = input("Please enter year of made: ").strip()
                     filtered_cars = self.car_controller.get_car_by_year(year)
-                    print(tabulate(self.convert_car_entities_to_table(filtered_cars), headers="keys", tablefmt="grid"))
-                case "5":
-                    filtered_cars = self.car_controller.get_car_by_availability(True)
-                    print(tabulate(self.convert_car_entities_to_table(filtered_cars), headers="keys", tablefmt="grid"))
-                    self.actions_on_selected_car()
-                case "6":
-                    return 6
+                    if filtered_cars == None:
+                        print("System was unable to find any car per filter criteria")
+                    else:
+                        print(tabulate(self.convert_car_entities_to_table(filtered_cars), headers="keys", tablefmt="grid"))
+                        self.actions_on_selected_car()
                 case "7":
+                    return 6
+                case "8":
                     return 7
                 case _:
                     print("Invalid choice. Please try again.")
@@ -92,8 +106,8 @@ class CarEntry():
         model = input("Enter car model: ").strip()
         year = self.validate_integer_input("Enter year: ")
         mileage = self.validate_integer_input("Enter mileage: ")
-        min_rent_period = self.validate_integer_input("Enter minimum rent period: ")
-        max_rent_period = self.validate_integer_input("Enter maximum Rent period: ")
+        min_rent_period = self.validate_integer_input("Enter minimum rent period (Days): ")
+        max_rent_period = self.validate_integer_input("Enter maximum Rent period (Days):")
 
         # Check if all required fields are filled
         if not (car_id and make and model):
@@ -201,6 +215,7 @@ class CarEntry():
                 "Model": car.model,
                 "Year": car.year,
                 "Mileage": car.mileage,
+                "Availability": car.availability,
                 "Min Rent Period": car.minimum_rent_period,
                 "Max Rent Period": car.maximum_rent_period,
             }

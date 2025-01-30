@@ -19,15 +19,15 @@ class CarService(ICarService):
         """Retrieve all cars."""
         return self.car_repository.get_all()
 
-    def get_car_by_id(self, id: str) -> CarEntity:
+    def get_car_by_id(self, id: int) -> CarEntity:
         """Retrieve a car by ID."""
         return self.car_repository.get_by_id(id)
 
-    def delete_car_by_id(self, id: str) -> bool:
+    def delete_car_by_id(self, id: int) -> bool:
         """Delete a car by ID."""
         return self.car_repository.delete_by_id(id)
 
-    def update_car_by_id(self, id: str, car_entity: CarEntity) -> CarEntity:
+    def update_car_by_id(self, id: int, car_entity: CarEntity) -> CarEntity:
         """Update a car by ID."""
         return self.car_repository.update_by_id(id, car_entity)
 

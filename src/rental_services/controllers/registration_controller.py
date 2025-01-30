@@ -46,14 +46,14 @@ class RegistrationController:
         """Get all registered users."""
         return self.user_service.get_all_users()
 
-    def get_user_by_id(self, user_id: str):
+    def get_user_by_id(self, user_id: int):
         """Get a user by ID."""
         return self.user_service.get_user_by_id(user_id)
 
-    def delete_user_by_id(self, user_id: str):
+    def delete_user_by_id(self, user_id: int):
         """Delete a user by ID."""
         return self.user_service.delete_user_by_id(user_id)
 
-    def update_user_by_id(self, user_id: str, user_data: dict):
+    def update_user_by_id(self, user_id: int, user_data: dict):
         """Update a user by ID."""
         return self.user_service.update_user_by_id(user_id, UserEntity(**user_data))

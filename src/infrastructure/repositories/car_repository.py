@@ -40,7 +40,7 @@ class CarRepository(BaseRepository[CarModel, CarEntity], ICarRepository):
     def to_model(self, entity: CarEntity) -> CarModel:
         """Convert CarEntity to CarModel."""
         return CarModel(
-            id=entity.to_binary_id(),
+            id=entity.id,
             car_id=entity.car_id,
             make=entity.make,
             model=entity.model,
@@ -54,7 +54,7 @@ class CarRepository(BaseRepository[CarModel, CarEntity], ICarRepository):
     def to_entity(self, model: CarModel) -> CarEntity:
         """Convert CarModel to CarEntity."""
         return CarEntity(
-            id=CarEntity.from_binary_id(model.id),
+            id=model.id,
             car_id=model.car_id,
             make=model.make,
             model=model.model,

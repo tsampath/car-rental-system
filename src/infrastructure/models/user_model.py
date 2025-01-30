@@ -1,12 +1,16 @@
-from sqlalchemy import Column, String, DateTime, BINARY
+from sqlalchemy import Column, String, DateTime, Integer
 from sqlalchemy.sql import func
 from .base_model import BaseModel
 
 class UserModel(BaseModel):
     """User database model."""
-    __tablename__ = "users"
-
-    id = Column(BINARY(16), primary_key=True, unique=True, nullable=False)
+    __tablename__ = "user"
+ 
+    __table_args__ = {
+        'mysql_engine': 'InnoDB',
+        'mysql_auto_increment': '1000'  # Auto-increment initial value
+    }
+    id = Column(Integer, primary_key=True, unique=True, nullable=False, autoincrement=True)
     first_name = Column(String(50), nullable=False)
     last_name = Column(String(50), nullable=False)
     dob = Column(DateTime, nullable=False)

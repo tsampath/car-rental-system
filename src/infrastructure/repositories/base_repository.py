@@ -23,23 +23,23 @@ class BaseRepository(Generic[TModel, TEntity]):
         records = self.session.query(self.model).all()
         return [self.to_entity(record) for record in records]
 
-    def get_by_id(self, entity_id: str) -> TEntity:
+    def get_by_id(self, entity_id: int) -> TEntity:
         """Retrieve a record by ID and convert it to an entity."""
         record = self.session.query(self.model).get(entity_id)
         return self.to_entity(record) if record else None
 
-    def delete_by_id(self, entity_id: str) -> bool:
+    def delete_by_id(self, entity_id: int) -> bool:
         """Delete a record by ID."""
-        record = self.session.query(self.model).get(entity_id.bytes)
+        record = self.session.query(self.model).get(entity_id)
         if record:
             self.session.delete(record)
             self.session.commit()
             return True
         return False
 
-    def update_by_id(self, entity_id: str, entity: TEntity) -> TEntity:
+    def update_by_id(self, entity_id: int, entity: TEntity) -> TEntity:
         """Update a record by ID with new data and return the updated entity."""
-        record = self.session.query(self.model).get(entity_id.bytes)
+        record = self.session.query(self.model).get(entity_id)
         if record:
             for key, value in entity.dict(exclude={"id"}).items():
                 setattr(record, key, value)

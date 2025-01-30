@@ -1,14 +1,11 @@
-from sqlalchemy.ext.declarative import as_declarative
-from sqlalchemy import Column, BINARY
-from sqlalchemy.ext.hybrid import hybrid_property
-import uuid
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer
+from sqlalchemy.schema import Sequence
 
-@as_declarative()
-class BaseModel:
-    """Base model for all SQLAlchemy models, includes id and UUID translation."""
-    id = Column(BINARY(16), primary_key=True, unique=True, nullable=False, default=lambda: uuid.uuid4().bytes)
+Base = declarative_base()
 
-    @hybrid_property
-    def uuid(self):
-        """Returns the UUID as a string from the BINARY(16) id."""
-        return str(uuid.UUID(bytes=self.id))
+class BaseModel(Base):
+    """Base model for all database models with an auto-increment primary key starting from 1000."""
+    __abstract__ = True
+
+    id = Column(Integer, Sequence('id_seq', start=1000, increment=1), primary_key=True, autoincrement=True)

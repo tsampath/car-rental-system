@@ -16,17 +16,17 @@ class ICarRepository(ABC):
         pass
 
     @abstractmethod
-    def get_by_id(self, Car_id: str) -> CarEntity:
+    def get_by_id(self, id: int) -> CarEntity:
         """Retrieve a Car by ID."""
         pass
 
     @abstractmethod
-    def delete_by_id(self, Car_id: str) -> bool:
+    def delete_by_id(self, id: int) -> bool:
         """Delete a Car by ID."""
         pass
 
     @abstractmethod
-    def update_by_id(self, Car_id: str, Car_model: CarEntity) -> CarEntity:
+    def update_by_id(self, id: int, Car_model: CarEntity) -> CarEntity:
         """Update a Car by ID."""
         pass
 

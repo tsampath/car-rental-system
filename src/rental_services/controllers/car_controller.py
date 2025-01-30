@@ -36,7 +36,7 @@ class CarController:
         """Get all registered cars."""
         return self.car_service.get_all_cars()
 
-    def get_car_by_id(self, id: str):
+    def get_car_by_id(self, id: int):
         """Get a car by ID."""
         return self.car_service.get_car_by_id(id)
 
@@ -44,11 +44,11 @@ class CarController:
         """Get a car by ID."""
         return self.car_service.get_car_by_car_id(car_id)
 
-    def delete_car_by_id(self, id: str):
+    def delete_car_by_id(self, id: int):
         """Delete a car by ID."""
         return self.car_service.delete_car_by_id(id)
 
-    def update_car_by_id(self, id: str, car_data: dict):
+    def update_car_by_id(self, id: int, car_data: dict):
         """Update a car by ID."""
         return self.car_service.update_car_by_id(id, CarEntity(**car_data))
     
