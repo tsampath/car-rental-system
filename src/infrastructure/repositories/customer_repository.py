@@ -23,7 +23,7 @@ class CustomerRepository(BaseRepository[CustomerModel, CustomerEntity], ICustome
     
     def get_customers_by_type(self, type_id: int) -> List[CustomerEntity]:
         """Retrieve a Customer by make."""
-        records = self.session.query(CustomerModel).filter_by(type_id = type_id)
+        records = self.session.query(CustomerModel).filter_by(customer_type_id = type_id)
         return [self.to_entity(record) for record in records]
         
     def get_customers_by_price_list(self, price_list_id: int) -> List[CustomerEntity]:

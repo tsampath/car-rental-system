@@ -6,11 +6,6 @@ class CustomerModel(BaseModel):
     """Customer database model."""
     __tablename__ = "customer"
 
-    __table_args__ = {
-        'mysql_engine': 'InnoDB',
-        'mysql_auto_increment': '1000'  # Auto-increment initial value
-    }
-    id = Column(Integer, primary_key=True, unique=True, nullable=False, autoincrement=True)
     name = Column(String(50), nullable=False)
     building_name = Column(String(50), nullable=True)
     address_line_1 = Column(String(50), nullable=True)

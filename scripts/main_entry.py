@@ -2,6 +2,7 @@ from rental_services.controllers.login_controller import LoginController
 from rental_services.controllers.registration_controller import RegistrationController
 from car_entry import CarEntry  
 from customer_entry import CustomerEntry 
+from booking_entry import BookingEntry
 
 def main():
     """Main entry point."""
@@ -9,6 +10,7 @@ def main():
     login_controller = LoginController()
     car_entry = CarEntry()
     customer_entry = CustomerEntry()
+    booking_entry = BookingEntry()
 
     is_logged_in = False
 
@@ -53,23 +55,24 @@ def main():
 
         else:
             print("\nWelcome to Yoobee Car Rental Management System!")
-            print("1. Car Management")
-            print("2. Customer Management")
-            print("3. Logout")
+            print("1. Booking Management")
+            print("2. Car Management")
+            print("3. Customer Management")
+            print("4. Logout")
             choice = input("Please select an option (1/2/3): ").strip()
+            match choice:
+                case "1":
+                    booking_entry.main()
+                case "2":
+                    car_entry.main()
+                case "3":
+                    customer_entry.main()
+                case "4":
+                    print("Logged out successfully!")
+                    is_logged_in = False
 
-            if choice == "1":
-                car_entry.main()
-
-            elif choice == "2":
-                customer_entry.main()
-
-            elif choice == "3":
-                print("Logged out successfully!")
-                is_logged_in = False
-
-            else:
-                print("Invalid choice. Please try again.")
+                case _:
+                    print("Invalid choice. Please try again.")
 
 if __name__ == "__main__":
     main()

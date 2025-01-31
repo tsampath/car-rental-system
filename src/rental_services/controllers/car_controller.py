@@ -13,7 +13,6 @@ class CarController:
 
         """Initialize CarController with CarService."""
         self.car_service: CarService = ServiceLocator.get_car_service()
-        print("\nAdding new car...")
         
         # Add car
     def add_car(self, car_data: dict) -> CarEntity:        
@@ -48,9 +47,9 @@ class CarController:
         """Delete a car by ID."""
         return self.car_service.delete_car_by_id(id)
 
-    def update_car_by_id(self, id: int, car_data: dict):
+    def update_car_by_id(self, id: int, car_data: CarEntity):
         """Update a car by ID."""
-        return self.car_service.update_car_by_id(id, CarEntity(**car_data))
+        return self.car_service.update_car_by_id(id, car_data)
     
     def get_by_make(self, make: str) -> List[CarEntity]:
         """Retrieve a car by make."""

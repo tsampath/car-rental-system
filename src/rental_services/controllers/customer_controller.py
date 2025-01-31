@@ -13,7 +13,6 @@ class CustomerController:
 
         """Initialize CustomerController with CustomerService."""
         self.customer_service: CustomerService = ServiceLocator.get_customer_service()
-        print("\nAdding new customer...")
         
         # Add customer
     def add_customer(self, customer_data: dict) -> CustomerEntity:        

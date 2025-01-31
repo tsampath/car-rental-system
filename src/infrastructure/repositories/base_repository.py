@@ -1,5 +1,6 @@
 from typing import Generic, TypeVar, List
 from sqlalchemy.orm import Session
+from datetime import datetime, timezone
 
 TModel = TypeVar("TModel")  # Type for database models
 TEntity = TypeVar("TEntity")  # Type for domain entities
@@ -41,6 +42,7 @@ class BaseRepository(Generic[TModel, TEntity]):
         """Update a record by ID with new data and return the updated entity."""
         record = self.session.query(self.model).get(entity_id)
         if record:
+            entity.updated_at = datetime.now(timezone.utc)
             for key, value in entity.dict(exclude={"id"}).items():
                 setattr(record, key, value)
             self.session.commit()

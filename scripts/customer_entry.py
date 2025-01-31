@@ -23,9 +23,9 @@ class CustomerEntry():
                 case "1":
                     return_value = self.search_customers()
                     match return_value:
-                        case 4:
+                        case 6:
                             continue
-                        case 5:
+                        case 7:
                             return
                         case _:
                             pass
@@ -72,42 +72,54 @@ class CustomerEntry():
                         self.actions_on_selected_customer()
                 case "4":
                     print("Please enter customer type: ")
-                    customer_type = input("Please select an option (1 -> Individual 2 -> Corporate): ").strip()
                     while True:
-                        match search_choice:
-                            case "1", "2":
-                                filtered_customers = self.customer_controller.get_customers_by_type(int(customer_type))
-                                if filtered_customers == None:
-                                    print("System was unable to find any customer per filter criteria")
-                                else:
-                                    print(tabulate(self.convert_customer_entities_to_table(filtered_customers), headers="keys", tablefmt="grid"))
-                                    self.actions_on_selected_customer()
-                                break
+                        customer_type = input("Please select an option (1 -> Individual 2 -> Corporate): ").strip()
+                        match customer_type:
+                            case "1":
+                                self.view_customer_by_type(customer_type)
+                            case "2":
+                                self.view_customer_by_type(customer_type)
                             case _:
                                 print("Invalid choice. Please try again.")
+                                break
 
                 case "5":
                     print("Please enter price list id: ")
                     price_list = input("Please select an option (1 -> Standard 2 -> Loyal): ").strip()
                     while True:
-                        match search_choice:
-                            case "1", "2":
-                                filtered_customers = self.customer_controller.get_customers_by_price_list(int(price_list))
-                                if filtered_customers == None:
-                                    print("System was unable to find any customer per filter criteria")
-                                else:
-                                    print(tabulate(self.convert_customer_entities_to_table(filtered_customers), headers="keys", tablefmt="grid"))
-                                    self.actions_on_selected_customer()
+                        match price_list:
+                            case "1":
+                                self.view_customers_by_price_list(price_list)
+                                break
+                            case "2":
+                                self.view_customers_by_price_list(price_list)
                                 break
                             case _:
                                 print("Invalid choice. Please try again.")
+                                break
                 case "6":
                     return int(search_choice)
                 case "7":
                     return int(search_choice)
                 case _:
                     print("Invalid choice. Please try again.")
-    
+
+    def view_customer_by_type(self, customer_type):
+        filtered_customers = self.customer_controller.get_customers_by_type(int(customer_type))
+        if filtered_customers == None:
+            print("System was unable to find any customer per filter criteria")
+        else:
+            print(tabulate(self.convert_customer_entities_to_table(filtered_customers), headers="keys", tablefmt="grid"))
+            self.actions_on_selected_customer()
+
+    def view_customers_by_price_list(self, price_list_id):
+        filtered_customers = self.customer_controller.get_customers_by_price_list(int(price_list_id))
+        if filtered_customers == None:
+            print("System was unable to find any customer per filter criteria")
+        else:
+            print(tabulate(self.convert_customer_entities_to_table(filtered_customers), headers="keys", tablefmt="grid"))
+            self.actions_on_selected_customer()
+
     def add_customer(self):
         print("Add a New Customer")
 
@@ -152,11 +164,11 @@ class CustomerEntry():
                     print(tabulate(filtered_customer, headers="keys", tablefmt="fancy_grid"))
                 case "2":
                     customer_id = self.validate_integer_input("Please enter customer id: ")
-                    filtered_customer = self.customer_controller.get_customer_by_customer_id(customer_id)
+                    filtered_customer = self.customer_controller.get_customer_by_id(customer_id)
                     if filtered_customer == None:
                         print("Customer not found!!")
                     else:
-                        self.update_customer(filtered_customer.id, filtered_customer.customer_id)
+                        self.update_customer(filtered_customer.id, filtered_customer.id)
                         print("Customer was updated successfully")
                         return
 

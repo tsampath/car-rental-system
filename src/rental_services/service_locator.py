@@ -5,6 +5,8 @@ from infrastructure.repositories.car_repository import CarRepository
 from domain.services.car_service import CarService
 from infrastructure.repositories.customer_repository  import CustomerRepository
 from domain.services.customer_service  import CustomerService
+from infrastructure.repositories.booking_repository import BookingRepository
+from domain.services.booking_service  import BookingService
 
 class ServiceLocator:
     """Resolves dependencies and creates service instances."""
@@ -29,3 +31,10 @@ class ServiceLocator:
         db_session = DB_Connection().get_session()
         car_repository = CustomerRepository(db_session)
         return CustomerService(car_repository)
+
+    @staticmethod
+    def get_booking_service():
+        """Resolve and return BookingService."""
+        db_session = DB_Connection().get_session()
+        booking_repository = BookingRepository(db_session)
+        return BookingService(booking_repository)
