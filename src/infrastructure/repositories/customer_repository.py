@@ -41,7 +41,8 @@ class CustomerRepository(BaseRepository[CustomerModel, CustomerEntity], ICustome
             address_line_2 = entity.address_line_2,
             town = entity.town,
             customer_type_id = entity.customer_type_id,
-            price_list_id = entity.price_list_id
+            price_list_id = entity.price_list_id,
+            email=entity.email
         )
 
     def to_entity(self, model: CustomerModel) -> CustomerEntity:
@@ -55,5 +56,6 @@ class CustomerRepository(BaseRepository[CustomerModel, CustomerEntity], ICustome
             address_line_2 = model.address_line_2,
             town = model.town,
             customer_type_id = model.customer_type_id, 
-            price_list_id = model.price_list_id
+            price_list_id = model.price_list_id,
+            email=model.email
         )

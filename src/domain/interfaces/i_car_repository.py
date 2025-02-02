@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 from domain.entities.car_entity import CarEntity
+from datetime import date
 
 class ICarRepository(ABC):
     """Interface for CarRepository."""
@@ -51,11 +52,6 @@ class ICarRepository(ABC):
         pass
 
     @abstractmethod
-    def get_by_availability(self, is_available: bool) -> List[CarEntity]:
-        """Retrieve a Car by availability."""
-        pass
-
-    @abstractmethod
     def to_model(self, entity: CarEntity):
         """Convert a CarEntity to a CarModel."""
         pass
@@ -63,4 +59,12 @@ class ICarRepository(ABC):
     @abstractmethod
     def to_entity(self, model) -> CarEntity:
         """Convert a CarModel to a CarEntity."""
+        pass
+
+    @abstractmethod
+    def search_available_cars(self, start_date: date, end_date: date) -> List[CarEntity]:
+        pass
+
+    @abstractmethod
+    def is_car_available(self, car_id: int, start_date: date, end_date: date) -> bool:
         pass

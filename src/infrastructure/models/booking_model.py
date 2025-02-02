@@ -1,10 +1,14 @@
 from sqlalchemy import Column, Integer, ForeignKey, Boolean, DateTime, String, func
+from sqlalchemy.ext.declarative import declarative_base
 
-from infrastructure.models.base_model import BaseModel
-from infrastructure.models.car_model import CarModel
-from infrastructure.models.customer_model import CustomerModel
+from .base_model import BaseModel
+# from .base import Base
+from .car_model import CarModel
+from .customer_model import CustomerModel
 
-class BookingModel(BaseModel):
+Base = declarative_base()
+
+class BookingModel(BaseModel, Base):
     """Booking database model."""
 
     __tablename__ = "booking"
@@ -13,9 +17,8 @@ class BookingModel(BaseModel):
     customer_id = Column(Integer, ForeignKey(CustomerModel.id, ondelete="CASCADE"), nullable=False)
     booking_start_date = Column(DateTime, nullable=False)
     booking_end_date = Column(DateTime, nullable=False)
-    created_at = Column(DateTime, server_default=func.now())
-    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
     is_closed = Column(Boolean, default=False)
     closed_date = Column(DateTime, nullable=True)
     additional_comment = Column(String(1000), nullable=True)
+    status_id = Column(Integer, nullable=True)
 

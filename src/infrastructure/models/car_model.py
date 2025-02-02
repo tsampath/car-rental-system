@@ -1,8 +1,10 @@
 from sqlalchemy import Column, String, DateTime, BINARY, Integer, Boolean
 from sqlalchemy.sql import func
-from .base_model import BaseModel
 
-class CarModel(BaseModel):
+from .base_model import BaseModel
+from .base import Base
+
+class CarModel(BaseModel, Base):
     """Car database model."""
     __tablename__ = "car"
 
@@ -14,5 +16,3 @@ class CarModel(BaseModel):
     availability = Column(Boolean, nullable=False)
     minimum_rent_period = Column(Integer, nullable=False)
     maximum_rent_period = Column(Integer, nullable=False)    
-    created_at = Column(DateTime, server_default=func.now())
-    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())

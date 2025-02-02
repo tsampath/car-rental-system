@@ -17,6 +17,11 @@ class CustomerController:
         # Add customer
     def add_customer(self, customer_data: dict) -> CustomerEntity:        
         
+        # Validate email
+        if not self.common_service.validate_email(customer_data['email']):
+            print("Error: Invalid email format. Please enter a valid email.")
+            return
+        
         new_customer = CustomerEntity(
             name = customer_data['name'],
             building_name = customer_data['building_name'],
@@ -24,11 +29,11 @@ class CustomerController:
             address_line_2 = customer_data['address_line_2'],
             town = customer_data['town'],
             customer_type_id = customer_data['customer_type_id'],
-            price_list_id = customer_data['price_list_id']
+            price_list_id = customer_data['price_list_id'],
+            email=customer_data['email']
         )
-        self.customer_service.add_customer(new_customer)
-
         print("Customer successful added!")
+        return self.customer_service.add_customer(new_customer)
 
     def get_all_customers(self) -> List[CustomerEntity]:
         """Get all registered customers."""

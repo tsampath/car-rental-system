@@ -22,7 +22,8 @@ class UserRepository(BaseRepository[UserModel, UserEntity], IUserRepository):
             last_name=entity.last_name,
             dob=entity.dob,
             email=entity.email,
-            password=entity.password
+            password=entity.password,
+            role_id = entity.role_id
         )
 
     def to_entity(self, model: UserModel) -> UserEntity:
@@ -33,5 +34,6 @@ class UserRepository(BaseRepository[UserModel, UserEntity], IUserRepository):
             last_name=model.last_name,
             dob=model.dob,
             email=model.email,
-            password=model.password
+            password=model.password,
+            role_id=model.role_id
         )

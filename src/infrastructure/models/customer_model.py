@@ -1,8 +1,11 @@
 from sqlalchemy import Column, String, DateTime, BINARY, Integer, Boolean, Sequence
 from sqlalchemy.sql import func
+from sqlalchemy.ext.declarative import declarative_base
 from .base_model import BaseModel
 
-class CustomerModel(BaseModel):
+Base = declarative_base()
+
+class CustomerModel(BaseModel, Base):
     """Customer database model."""
     __tablename__ = "customer"
 
@@ -13,5 +16,5 @@ class CustomerModel(BaseModel):
     town = Column(String(50), nullable=True)
     customer_type_id = Column(Integer, nullable=False)
     price_list_id = Column(Integer, nullable=False)
-    created_at = Column(DateTime, server_default=func.now())
-    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+    email = Column(String(100), unique=True, nullable=True)
+

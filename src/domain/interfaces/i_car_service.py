@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
+from datetime import date
+
 from domain.entities.car_entity import CarEntity
 
 class ICarService(ABC):
@@ -42,5 +44,9 @@ class ICarService(ABC):
         pass
 
     @abstractmethod
-    def get_car_by_availability(self, is_available: bool) -> List[CarEntity]:
+    def search_available_cars(self, start_date: date, end_date: date) -> List[CarEntity]:
+        pass
+
+    @abstractmethod
+    def is_car_available(self, car_id: int, start_date: date, end_date: date) -> bool:
         pass

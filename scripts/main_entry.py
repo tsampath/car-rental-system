@@ -1,78 +1,58 @@
 from rental_services.controllers.login_controller import LoginController
-from rental_services.controllers.registration_controller import RegistrationController
-from car_entry import CarEntry  
-from customer_entry import CustomerEntry 
-from booking_entry import BookingEntry
-
+from rental_services.controllers.user_controller import UserController
+from admin_entry import AdminEntry
+from customer_entry import CustomerEntry
 def main():
     """Main entry point."""
-    registration_controller = RegistrationController()
+    user_controller = UserController()
     login_controller = LoginController()
-    car_entry = CarEntry()
+    admin_entry = AdminEntry() 
     customer_entry = CustomerEntry()
-    booking_entry = BookingEntry()
-
-    is_logged_in = False
 
     while True:
-        if not is_logged_in:
-            print("\nWelcome to Yoobee Car Rental!")
-            print("1. Login")
-            print("2. Register")
-            print("3. Exit")
-            choice = input("Please select an option (1/2/3): ").strip()
 
-            if choice == "1":
-                email = input("Enter Email: ").strip()
-                password = input("Enter Password: ").strip()
-                if login_controller.login_user(email, password):
-                    print("Login successful!")
-                    is_logged_in = True
-                else:
-                    print("Login failed. Please try again.")
+        print("\nWelcome to Yoobee Car Rental!")
+        print("1. Login")
+        print("2. Register")
+        print("3. Exit")
+        choice = input("Please select an option (1/2/3): ").strip()
 
-            elif choice == "2":
-                user_data = {
-                    "first_name": input("Enter First Name: ").strip(),
-                    "last_name": input("Enter Last Name: ").strip(),
-                    "dob": input("Enter Date of Birth (YYYY-MM-DD): ").strip(),
-                    "email": input("Enter Email: ").strip(),
-                    "password": input("Enter Password: ").strip()
-                }
-                confirm_password = input("Confirm Password: ").strip()
-                if confirm_password != user_data["password"]:
-                    print("Error: Password confirmation does not match. Please try again.")
-                    continue
-
-                registration_controller.register_user(user_data)
-
-            elif choice == "3":
-                print("Goodbye!")
-                break
-
+        if choice == "1":
+            email = input("Enter Email: ").strip()
+            password = input("Enter Password: ").strip()
+            logged_in_user = login_controller.login_user(email, password)
+            if logged_in_user != None:
+                print("Login successful!")
+                if(logged_in_user.role_id == 1):
+                    admin_entry.main()
+                elif(logged_in_user.role_id == 2):
+                    customer_entry.main(logged_in_user.customer_id)
             else:
-                print("Invalid choice. Please try again.")
+                print("Login failed. Please try again.")
+
+        elif choice == "2":
+            user_data = {
+                "first_name": input("Enter First Name: ").strip(),
+                "last_name": input("Enter Last Name: ").strip(),
+                "dob": input("Enter Date of Birth (YYYY-MM-DD): ").strip(),
+                "email": input("Enter Email: ").strip(),
+                "password": input("Enter Password: ").strip()
+            }
+            confirm_password = input("Confirm Password: ").strip()
+            if confirm_password != user_data["password"]:
+                print("Error: Password confirmation does not match. Please try again.")
+                continue
+
+            user_controller.register_user(user_data)
+
+        elif choice == "3":
+            print("Goodbye!")
+            break
 
         else:
-            print("\nWelcome to Yoobee Car Rental Management System!")
-            print("1. Booking Management")
-            print("2. Car Management")
-            print("3. Customer Management")
-            print("4. Logout")
-            choice = input("Please select an option (1/2/3): ").strip()
-            match choice:
-                case "1":
-                    booking_entry.main()
-                case "2":
-                    car_entry.main()
-                case "3":
-                    customer_entry.main()
-                case "4":
-                    print("Logged out successfully!")
-                    is_logged_in = False
+            print("Invalid choice. Please try again.")
 
-                case _:
-                    print("Invalid choice. Please try again.")
+
 
 if __name__ == "__main__":
     main()

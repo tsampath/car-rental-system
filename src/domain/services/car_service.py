@@ -1,4 +1,5 @@
 from typing import List
+from datetime import date
 
 from domain.interfaces.i_car_service import ICarService
 from domain.interfaces.i_car_repository import ICarRepository
@@ -47,6 +48,9 @@ class CarService(ICarService):
         """Retrieve a car by year."""
         return self.car_repository.get_by_year(year)
     
-    def get_car_by_availability(self, is_available: bool) -> List[CarEntity]:
-        """Retrieve a car by availability."""
-        return self.car_repository.get_by_availability(is_available)
+    def search_available_cars(self, start_date: date, end_date: date) -> List[CarEntity]:
+        """Retrieve available cars by start and end date."""
+        return self.car_repository.search_available_cars(start_date, end_date)    
+    
+    def is_car_available(self, car_id: int, start_date: date, end_date: date) -> bool:
+        return self.car_repository.is_car_available(car_id, start_date, end_date)

@@ -1,7 +1,6 @@
 from datetime import date
 from pydantic import EmailStr
 from typing import Optional
-from datetime import datetime
 
 from domain.entities.base_entity import BaseEntity
 
@@ -12,8 +11,5 @@ class UserEntity(BaseEntity):
     dob: date
     email: EmailStr
     password: str
-    created_at: Optional[datetime] = None
-    updated_at: Optional[datetime] = None
-
-    class Config:
-        from_attributes = True
+    role_id: Optional[int] = None
+    customer_id: Optional[int] = None

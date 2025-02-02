@@ -1,16 +1,24 @@
+from common.enums import CustomerType
+from common.enums import PriceList
 from domain.services.common_service import CommonService
 from domain.entities.user_entity import UserEntity
 from domain.services.user_service import UserService
+from domain.entities.customer_entity import CustomerEntity
+from domain.services.customer_service import CustomerService
 from rental_services.service_locator import ServiceLocator
+from rental_services.controllers.customer_controller import CustomerController
 
-class RegistrationController:
+class UserController:
     """Controller for user registration and related operations."""
 
     def __init__(self):
+        """Initialize CustomerController."""
+        self.customer_controller = CustomerController()
+    
         self.common_service = CommonService()
 
-        """Initialize RegistrationController with UserService."""
         self.user_service: UserService = ServiceLocator.get_user_service()
+        self.customer_service: CustomerService = ServiceLocator.get_customer_service()
 
     def register_user(self, user_data: dict) -> UserEntity:
         """Handles new user registration."""
@@ -29,14 +37,28 @@ class RegistrationController:
         hashed_password = self.common_service.hash_password(user_data['password'])
 
         print("\nRegistering new user...")
-        
+
+        # Add new customer
+        customer_data = CustomerEntity(
+            name = user_data['first_name'] + ' ' + user_data['last_name'],
+            # building_name = '',
+            # address_line_1 = '',
+            # address_line_2 = '',
+            # town = '',
+            customer_type_id = CustomerType.INDIVIDUAL,
+            price_list_id = PriceList.Standard,
+            email = user_data['email'],
+        )
+        customer  = self.customer_service.add_customer(customer_data)
+
         # Add user
         new_user = UserEntity(
             first_name = user_data['first_name'],
             last_name = user_data['last_name'],
             dob = user_data['dob'],
             email = user_data['email'],
-            password = hashed_password
+            password = hashed_password,
+            customer_id = customer.id
         )
         self.user_service.add_user(new_user)
 

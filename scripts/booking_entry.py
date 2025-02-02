@@ -2,9 +2,12 @@ from tabulate import tabulate
 from typing import List
 from datetime import datetime
 
+from common.enums import BookingStatus
 from rental_services.controllers.booking_controller import BookingController
 from rental_services.controllers.car_controller import CarController
 from rental_services.controllers.customer_controller import CustomerController
+from domain.entities.booking_entity import BookingEntity
+from domain.entities.car_entity import CarEntity
 
 class BookingEntry():
     """Booking Entry for booking related operations."""
@@ -38,7 +41,7 @@ class BookingEntry():
                         case _:
                             pass
                 case "2":
-                    self.add_booking()
+                    self.add_booking(BookingStatus.Approved, -1)
                 case "3":
                     return
                 case _:
@@ -97,14 +100,17 @@ class BookingEntry():
                     print("Invalid choice. Please try again.")
 
     
-    def add_booking(self):
+    def add_booking(self, status_id: BookingStatus, customer_id: int):
         print("Add a New Booking")
         filtered_car = self.get_car()
         if filtered_car != None:
-            customer_id = input("Please enter customer id: ").strip()
-            filtered_customer = self.customer_controller.get_customer_by_id(customer_id)
-            if filtered_customer == None:
-                print("System was unable to find any customer by given customer id")
+            if(customer_id == -1):
+                customer_id_str = input("Please enter customer id: ").strip()
+                filtered_customer = self.customer_controller.get_customer_by_id(customer_id_str)
+                if filtered_customer == None:
+                    print("System was unable to find any customer by given customer id")
+                else:
+                    customer_id = filtered_customer.id
             else:
                 while True:
                     booking_start_date = input("Booking start date (YYYY-MM-DD): ").strip()
@@ -112,16 +118,21 @@ class BookingEntry():
                         booking_end_date = input("Booking end date (YYYY-MM-DD): ").strip()
                         if self.validate_date(booking_start_date):
                             additional_comment = input("Additional comment : ").strip()
-
-                            booking_data = {
-                                "car_id": int(filtered_car.id),
-                                "customer_id": int(filtered_customer.id),
-                                "booking_start_date": booking_start_date,
-                                "booking_end_date": booking_end_date,
-                                "additional_comment": additional_comment
-                            }
-                            self.booking_controller.add_booking(booking_data)
-                            print(f"Booking added successfully: {booking_data}")
+                            start_date = datetime.strptime(booking_start_date, "%Y-%m-%d")
+                            end_date = datetime.strptime(booking_end_date, "%Y-%m-%d")
+                            if(self.car_controller.is_car_available(filtered_car.id, start_date, end_date)):
+                                booking_data = {
+                                    "car_id": int(filtered_car.id),
+                                    "customer_id": int(filtered_customer.id),
+                                    "booking_start_date": booking_start_date,
+                                    "booking_end_date": booking_end_date,
+                                    "additional_comment": additional_comment,
+                                    "status_id": int(status_id)
+                                }
+                                self.booking_controller.add_booking(booking_data)
+                                print("Booking added successfully!!")
+                            else:
+                                print("Selected car is not available")
                             return
                         else:
                             print("Invalid date please try again")
@@ -162,7 +173,7 @@ class BookingEntry():
                 case _:
                     print("Invalid choice. Please try again.")
 
-    def get_booking(self) -> any: 
+    def get_booking(self) -> BookingEntity: 
         booking_id = input("Please enter booking id: ").strip()
         filtered_booking = self.booking_controller.get_booking_by_id(booking_id)
         if filtered_booking == None:
@@ -171,7 +182,7 @@ class BookingEntry():
         else:
             return filtered_booking
 
-    def get_car(self) -> any: 
+    def get_car(self) -> CarEntity: 
         registration_number = input("Please enter registration number of a car: ").strip()
         filtered_car = self.car_controller.get_car_by_car_id(registration_number)
         if filtered_car == None:
@@ -214,7 +225,7 @@ class BookingEntry():
                 return int(value)
             print("Invalid input. Please enter a valid integer.")
 
-    def convert_booking_entities_to_table(self, bookings):
+    def convert_booking_entities_to_table(self, bookings: List[BookingEntity]):
         """Convert a list of BookingEntity objects to a list of dictionaries for tabulation."""
         return [
             {
@@ -225,6 +236,7 @@ class BookingEntry():
                 "Booking End Date": booking.booking_end_date,
                 "Closed": booking.is_closed,
                 "Closed Date": booking.closed_date,
+                "Status": 'Pending' if BookingStatus.Pending == booking.status_id else 'Approved',
                 "Additional Comment": booking.additional_comment
             }
             for booking in bookings

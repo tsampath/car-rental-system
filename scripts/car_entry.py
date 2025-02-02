@@ -1,5 +1,6 @@
 from tabulate import tabulate
 from typing import List
+from datetime import datetime
 
 from rental_services.controllers.car_controller import CarController
 from booking_entry import BookingEntry
@@ -18,13 +19,19 @@ class CarEntry():
 
         while True:
             print("\nCar Management")
-            print("1. Search Cars")
-            print("2. Add Car")
-            print("3. Back to Main Menu")
+            print("1. Search Available Cars")
+            print("2. Search Cars")
+            print("3. Add Car")
+            print("4. Back to Main Menu")
             choice = input("Please select an option (1/2/3): ").strip()
 
             match choice:
                 case "1":
+                    if (self.search_available_cars()):
+                        self.actions_on_selected_car()
+                    else:
+                        print("No cars available for the given date period")
+                case "2":
                     return_value = self.search_cars()
                     match return_value:
                         case 6:
@@ -33,12 +40,34 @@ class CarEntry():
                             return
                         case _:
                             pass
-                case "2":
-                    self.add_car()
                 case "3":
+                    self.add_car()
+                case "4":
                     return
                 case _:
                     print("Invalid choice. Please try again.")
+
+    def search_available_cars(self):
+        start_date_str = input("Enter booking start date (YYYY-MM-DD): ").strip()
+        end_date_str = input("Enter booking end date (YYYY-MM-DD): ").strip()
+
+        try:
+            start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
+            end_date = datetime.strptime(end_date_str, "%Y-%m-%d")
+
+            if start_date >= end_date:
+                print("Error: Start date must be before end date.")
+                return
+            
+            available_cars = self.car_controller.search_available_cars(start_date, end_date)
+            if(available_cars != None):
+                print(tabulate(self.convert_car_entities_to_table(available_cars), headers="keys", tablefmt="grid"))
+                return True
+            else:
+                return False
+        
+        except ValueError:
+            print("Invalid date format. Please use YYYY-MM-DD.")
 
     def search_cars(self) -> int:
         while True:
@@ -175,8 +204,8 @@ class CarEntry():
             print("Car was updated successfully")
 
 
+
     def validate_integer_input(self, prompt):
-        """Utility function to validate integer input."""
         while True:
             value = input(prompt).strip()
             if value.isdigit():
@@ -187,12 +216,11 @@ class CarEntry():
         """Convert a list of CarEntity objects to a list of dictionaries for tabulation."""
         return [
             {
-                "Car ID": car.car_id,
+                "Car Registration ID": car.car_id,
                 "Make": car.make,
                 "Model": car.model,
                 "Year": car.year,
                 "Mileage": car.mileage,
-                "Availability": car.availability,
                 "Min Rent Period": car.minimum_rent_period,
                 "Max Rent Period": car.maximum_rent_period,
             }

@@ -1,4 +1,5 @@
 from typing import List
+from datetime import date
 
 from domain.services.common_service import CommonService
 from domain.entities.car_entity import CarEntity
@@ -63,6 +64,10 @@ class CarController:
         """Retrieve a car by year."""
         return self.car_service.get_car_by_year(year)    
     
-    def get_car_by_availability(self, is_available: bool) -> List[CarEntity]:
-        """Retrieve a car by availability."""
-        return self.car_service.get_car_by_availability(is_available)
+    def search_available_cars(self, start_date: date, end_date: date) -> List[CarEntity]:
+        """Retrieve available cars."""
+        return self.car_service.search_available_cars(start_date, end_date)
+    
+    def is_car_available(self, car_id: int, start_date: date, end_date: date) -> bool:
+        """Retrieve available cars."""
+        return self.car_service.is_car_available(car_id, start_date, end_date)

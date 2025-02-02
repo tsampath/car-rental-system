@@ -32,7 +32,8 @@ class BookingController:
             customer_id = booking_data['customer_id'],
             booking_start_date = booking_data['booking_start_date'],
             booking_end_date = booking_data['booking_end_date'],
-            is_closed = False
+            is_closed = False,
+            status_id = booking_data['status_id'],
         )
         self.booking_service.create_booking(new_booking)
 

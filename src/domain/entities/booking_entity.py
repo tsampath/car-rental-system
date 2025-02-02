@@ -10,9 +10,8 @@ class BookingEntity(BaseEntity):
     customer_id: int
     booking_start_date: datetime
     booking_end_date: datetime
-    created_at: Optional[datetime] = None
-    updated_at: Optional[datetime] = None
     is_closed: bool = False
     closed_date: Optional[datetime] = None
     additional_comment: Optional[str] = None
+    status_id: int
 
