@@ -34,6 +34,7 @@ class BookingController:
             booking_end_date = booking_data['booking_end_date'],
             is_closed = False,
             status_id = booking_data['status_id'],
+            total_cost = booking_data['total_cost']
         )
         self.booking_service.create_booking(new_booking)
 

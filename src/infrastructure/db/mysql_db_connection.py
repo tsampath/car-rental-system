@@ -15,7 +15,7 @@ class DB_Connection:
                 db_url, 
                 pool_size=10,               # Maintain 10 persistent connections
                 max_overflow=5,             # Allow up to 5 temporary connections beyond pool_size
-                pool_recycle=3600,          # Recycle connections every 1 hour (3600 seconds)
+                pool_recycle=120,          # Recycle connections every 1 hour (3600 seconds)
                 pool_timeout=30,            # Wait 30 seconds before raising timeout errors
                 pool_pre_ping=True          # Test the connection before using it
             )

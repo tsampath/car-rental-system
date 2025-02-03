@@ -134,6 +134,8 @@ class CarEntry():
         mileage = self.validate_integer_input("Enter mileage: ")
         min_rent_period = self.validate_integer_input("Enter minimum rent period (Days): ")
         max_rent_period = self.validate_integer_input("Enter maximum Rent period (Days):")
+        rate_per_day = self.validate_float("Enter rate per day($):")
+        
 
         # Check if all required fields are filled
         if not (car_id and make and model):
@@ -147,7 +149,8 @@ class CarEntry():
             "year": year,
             "mileage": mileage,
             "minimum_rent_period": min_rent_period,
-            "maximum_rent_period": max_rent_period
+            "maximum_rent_period": max_rent_period,
+            "rate_per_day": rate_per_day
         }
 
         self.car_controller.add_car(car_data)
@@ -226,6 +229,16 @@ class CarEntry():
             }
             for car in cars
         ]
+    
+    def validate_float(self, prompt) -> float:
+        """Prompt user for a float and keep retrying until valid."""
+        while True:
+            user_input = input(prompt)
+            try:
+                value = float(user_input)
+                return value  # success
+            except ValueError:
+                print(f"Error: '{user_input}' is not a valid floating-point number. Please try again.")
 
 #todo: remove this line when testing done
 # CarEntry().main()

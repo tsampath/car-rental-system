@@ -8,6 +8,7 @@ from rental_services.controllers.car_controller import CarController
 from rental_services.controllers.customer_controller import CustomerController
 from domain.entities.booking_entity import BookingEntity
 from domain.entities.car_entity import CarEntity
+from common.constants import Constants
 
 class BookingEntry():
     """Booking Entry for booking related operations."""
@@ -125,15 +126,24 @@ class BookingEntry():
                             print("Error: Start date must be before end date.")
                             return
                         if(self.car_controller.is_car_available(filtered_car.id, start_date, end_date)):
+
+                            num_days = (end_date - start_date).days
+                            total_booking_cost = (num_days * filtered_car.rate_per_day)
+                            gst = (total_booking_cost * Constants.GST_RATE)/100
+                            total_cost = round(total_booking_cost + gst, 2)
+                            print(f"Total cost as per start and end date ${total_cost}")
+                            confirmation = input("Please hit enter button to proceed. If you would like to see different option please type exit and hit enter: ")
+                            if(confirmation == 'exit'):
+                                return
                             booking_data = {
                                 "car_id": int(filtered_car.id),
                                 "customer_id": customer_id,
                                 "booking_start_date": booking_start_date,
                                 "booking_end_date": booking_end_date,
                                 "additional_comment": additional_comment,
-                                "status_id": status_id
+                                "status_id": status_id,
+                                "total_cost": total_cost
                             }
-
                             self.booking_controller.add_booking(booking_data)
                             print("Booking added successfully!!")
                         else:
@@ -241,6 +251,7 @@ class BookingEntry():
                 "Booking End Date": booking.booking_end_date,
                 "Closed": booking.is_closed,
                 "Closed Date": booking.closed_date,
+                "Total Cost": booking.total_cost,
                 "Status": 'Pending' if BookingStatus.Pending.value == booking.status_id else 'Approved',
                 "Additional Comment": booking.additional_comment
             }

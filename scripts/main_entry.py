@@ -1,3 +1,5 @@
+import getpass
+
 from rental_services.controllers.login_controller import LoginController
 from rental_services.controllers.user_controller import UserController
 from admin_entry import AdminEntry
@@ -21,7 +23,7 @@ def main():
 
         if choice == "1":
             email = input("Enter Email: ").strip()
-            password = input("Enter Password: ").strip()
+            password = getpass.getpass(prompt="Enter your password: ")
             logged_in_user = login_controller.login_user(email, password)
             if logged_in_user != None:
                 print("Login successful!")

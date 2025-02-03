@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, ForeignKey, Boolean, DateTime, String, func
+from sqlalchemy import Column, Integer, ForeignKey, Boolean, DateTime, String, func, DECIMAL
 from sqlalchemy.ext.declarative import declarative_base
 
 from .base_model import BaseModel
@@ -21,4 +21,4 @@ class BookingModel(BaseModel, Base):
     closed_date = Column(DateTime, nullable=True)
     additional_comment = Column(String(1000), nullable=True)
     status_id = Column(Integer, nullable=True)
-
+    total_cost =  Column(DECIMAL(15, 2), nullable=True)

@@ -104,7 +104,8 @@ class CarRepository(BaseRepository[CarModel, CarEntity], ICarRepository):
             minimum_rent_period=entity.minimum_rent_period,
             maximum_rent_period=entity.maximum_rent_period,
             created_at = entity.created_at,
-            updated_at = entity.updated_at
+            updated_at = entity.updated_at,
+            rate_per_day = entity.rate_per_day
         )
 
     def to_entity(self, model: CarModel) -> CarEntity:
@@ -120,5 +121,6 @@ class CarRepository(BaseRepository[CarModel, CarEntity], ICarRepository):
             minimum_rent_period=model.minimum_rent_period,
             maximum_rent_period=model.maximum_rent_period,
             created_at=model.created_at,
-            updated_at=model.updated_at
+            updated_at=model.updated_at,
+            rate_per_day=model.rate_per_day
         )

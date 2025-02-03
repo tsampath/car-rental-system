@@ -67,7 +67,8 @@ class BookingRepository(BaseRepository[BookingModel, BookingEntity], IBookingRep
             additional_comment=entity.additional_comment,
             created_at = entity.created_at,
             updated_at = entity.updated_at,
-            status_id = entity.status_id
+            status_id = entity.status_id,
+            total_cost = entity.total_cost 
         )
 
     def to_entity(self, model: BookingModel) -> BookingEntity:
@@ -83,5 +84,6 @@ class BookingRepository(BaseRepository[BookingModel, BookingEntity], IBookingRep
             additional_comment=model.additional_comment,
             created_at=model.created_at,
             updated_at=model.updated_at,
-            status_id=model.status_id
+            status_id=model.status_id,
+            total_cost=model.total_cost
         )

@@ -14,4 +14,5 @@ class BookingEntity(BaseEntity):
     closed_date: Optional[datetime] = None
     additional_comment: Optional[str] = None
     status_id: int
+    total_cost: float
 

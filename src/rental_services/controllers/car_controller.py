@@ -26,7 +26,8 @@ class CarController:
             mileage = car_data['mileage'],
             minimum_rent_period = car_data['minimum_rent_period'],
             maximum_rent_period = car_data['maximum_rent_period'],
-            availability = True
+            availability = True,
+            rate_per_day = car_data['rate_per_day']
         )
         self.car_service.add_car(new_car)
 

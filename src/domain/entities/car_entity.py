@@ -12,3 +12,4 @@ class CarEntity(BaseEntity):
     availability: bool
     minimum_rent_period: int
     maximum_rent_period: int
+    rate_per_day: float
