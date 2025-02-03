@@ -63,32 +63,33 @@ class CarRepository(BaseRepository[CarModel, CarEntity], ICarRepository):
 
         return [self.to_entity(car) for car in available_cars]
 
-    def is_car_available(self, scar_id: int, start_date: date, end_date: date) -> bool:
+    def is_car_available(self, car_id: int, start_date: date, end_date: date) -> bool:
         """Check whether that the given car is available or not depending on given dates"""
 
-        # Calculate the booking duration
+        # Calculate booking duration in days
         num_days = (end_date - start_date).days
 
-        # Subquery: Find all cars that have overlapping bookings
-        booked_cars_subquery = select(BookingModel.car_id).where(
-            and_(
-                BookingModel.is_closed == False,  # Active bookings only
-                or_(
-                    and_(BookingModel.booking_start_date <= start_date, BookingModel.booking_end_date >= start_date),  # New start overlaps existing booking
-                    and_(BookingModel.booking_start_date <= end_date, BookingModel.booking_end_date >= end_date),  # New end overlaps existing booking
-                    and_(BookingModel.booking_start_date >= start_date, BookingModel.booking_end_date <= end_date)  # Existing booking inside new range
-                )
+        # Check if the car exists
+        car = self.session.query(CarModel).filter(CarModel.id == car_id).first()
+        if not car:
+            return False  # Car doesn't exist
+
+        # Ensure booking duration is within allowed range
+        if num_days < car.minimum_rent_period or num_days > car.maximum_rent_period:
+            return False  # Rental period constraints not met
+
+         # Check if the car is already booked during the requested period
+        overlapping_bookings = self.session.query(BookingModel.id).filter(
+            BookingModel.car_id == car_id,
+            BookingModel.is_closed == False,
+            or_(
+                and_(BookingModel.booking_start_date <= start_date, BookingModel.booking_end_date >= start_date),  # New start overlaps existing booking
+                and_(BookingModel.booking_start_date <= end_date, BookingModel.booking_end_date >= end_date),  # New end overlaps existing booking
+                and_(BookingModel.booking_start_date >= start_date, BookingModel.booking_end_date <= end_date)  # Existing booking inside new range
             )
-        )
+        ).count()
 
-        # Query available cars
-        available_cars = self.session.query(CarModel).filter(
-            ~CarModel.id.in_(booked_cars_subquery),  # Exclude booked cars
-            CarModel.minimum_rent_period <= num_days,  # Ensure min rent period
-            CarModel.maximum_rent_period >= num_days  # Ensure max rent period
-        ).all()
-
-        return [self.to_entity(car) for car in available_cars]
+        return overlapping_bookings == 0  # Car is available if there are no active bookings
         
     def to_model(self, entity: CarEntity) -> CarModel:
         """Convert CarEntity to CarModel."""

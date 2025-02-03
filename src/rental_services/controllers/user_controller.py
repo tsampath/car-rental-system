@@ -45,8 +45,8 @@ class UserController:
             # address_line_1 = '',
             # address_line_2 = '',
             # town = '',
-            customer_type_id = CustomerType.INDIVIDUAL,
-            price_list_id = PriceList.Standard,
+            customer_type_id = CustomerType.INDIVIDUAL.value,
+            price_list_id = PriceList.Standard.value,
             email = user_data['email'],
         )
         customer  = self.customer_service.add_customer(customer_data)

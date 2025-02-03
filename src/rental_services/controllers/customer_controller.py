@@ -49,6 +49,12 @@ class CustomerController:
 
     def update_customer_by_id(self, id: int, customer_data: dict):
         """Update a customer by ID."""
+
+        # Validate email
+        if not self.common_service.validate_email(customer_data['email']):
+            print("Error: Invalid email format. Please enter a valid email.")
+            return
+
         return self.customer_service.update_customer_by_id(id, CustomerEntity(**customer_data))
 
     def get_customer_by_name(self, name: str) -> List[CustomerEntity]:

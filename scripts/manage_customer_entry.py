@@ -78,9 +78,9 @@ class ManageCustomerEntry():
                         customer_type = input("Please select an option (1 -> Individual 2 -> Corporate): ").strip()
                         match customer_type:
                             case "1":
-                                self.view_customer_by_type(CustomerType.INDIVIDUAL)
+                                self.view_customer_by_type(CustomerType.INDIVIDUAL.value)
                             case "2":
-                                self.view_customer_by_type(CustomerType.CORPORATE)
+                                self.view_customer_by_type(CustomerType.CORPORATE.value)
                             case _:
                                 print("Invalid choice. Please try again.")
                                 break
@@ -126,6 +126,7 @@ class ManageCustomerEntry():
         print("Add a New Customer")
 
         name = input("Enter customer name: ").strip()
+        email = input("Enter Email: ").strip()
         building_name = input("Enter customer address unit/level/floor: ").strip()
         address_line_1 = input("Enter customer address street number and name: ").strip()
         address_line_2 = input("Enter customer address delivery suburb if any:")
@@ -145,7 +146,8 @@ class ManageCustomerEntry():
             "address_line_2": address_line_2,
             "town": town,
             "customer_type_id": customer_type_id,
-            "price_list_id": price_list_id
+            "price_list_id": price_list_id,
+            "email": email
         }
 
         self.customer_controller.add_customer(customer_data)
@@ -171,7 +173,6 @@ class ManageCustomerEntry():
                         print("Customer not found!!")
                     else:
                         self.update_customer(filtered_customer.id, filtered_customer.id)
-                        print("Customer was updated successfully")
                         return
 
                 case "3":
@@ -193,6 +194,7 @@ class ManageCustomerEntry():
     def update_customer(self, id: str, customer_Id: str):
         print("Update a Customer")
         name = input("Enter customer name: ").strip()
+        email = input("Enter Email: ").strip()
         building_name = input("Enter customer address unit/level/floor: ").strip()
         address_line_1 = input("Enter customer address street number and name: ").strip()
         address_line_2 = input("Enter customer address delivery suburb if any:")
@@ -214,7 +216,8 @@ class ManageCustomerEntry():
             "address_line_2": address_line_2,
             "town": town,
             "customer_type_id": customer_type_id,
-            "price_list_id": price_list_id
+            "price_list_id": price_list_id,
+            "email": email
         }
 
         if self.customer_controller.update_customer_by_id(id, customer_data) == None:

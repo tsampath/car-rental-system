@@ -66,7 +66,8 @@ class BookingRepository(BaseRepository[BookingModel, BookingEntity], IBookingRep
             closed_date=entity.closed_date,
             additional_comment=entity.additional_comment,
             created_at = entity.created_at,
-            updated_at = entity.updated_at
+            updated_at = entity.updated_at,
+            status_id = entity.status_id
         )
 
     def to_entity(self, model: BookingModel) -> BookingEntity:
@@ -81,5 +82,6 @@ class BookingRepository(BaseRepository[BookingModel, BookingEntity], IBookingRep
             closed_date=model.closed_date,
             additional_comment=model.additional_comment,
             created_at=model.created_at,
-            updated_at=model.updated_at
+            updated_at=model.updated_at,
+            status_id=model.status_id
         )

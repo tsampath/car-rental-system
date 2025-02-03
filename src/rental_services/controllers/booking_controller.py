@@ -37,8 +37,6 @@ class BookingController:
         )
         self.booking_service.create_booking(new_booking)
 
-        print("Booking successful added!")
-
     def get_all_bookings(self):
         """Get all registered bookings."""
         return self.booking_service.get_all_bookings()

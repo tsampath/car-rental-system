@@ -2,6 +2,8 @@ from rental_services.controllers.login_controller import LoginController
 from rental_services.controllers.user_controller import UserController
 from admin_entry import AdminEntry
 from customer_entry import CustomerEntry
+from common.enums import Role
+
 def main():
     """Main entry point."""
     user_controller = UserController()
@@ -23,9 +25,9 @@ def main():
             logged_in_user = login_controller.login_user(email, password)
             if logged_in_user != None:
                 print("Login successful!")
-                if(logged_in_user.role_id == 1):
+                if(logged_in_user.role_id == Role.Admin.value):
                     admin_entry.main()
-                elif(logged_in_user.role_id == 2):
+                elif(logged_in_user.role_id == Role.Customer.value):
                     customer_entry.main(logged_in_user.customer_id)
             else:
                 print("Login failed. Please try again.")

@@ -11,3 +11,7 @@ class PriceList(Enum):
 class BookingStatus(Enum):
     Pending = 1
     Approved = 2
+
+class Role(Enum):
+    Admin = 1
+    Customer = 2
