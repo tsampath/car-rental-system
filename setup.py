@@ -16,6 +16,7 @@ setup(
         "alembic",
         "pymysql",
         "pydantic",
-        "pydantic[email]"
+        "pydantic[email]",
+        "tabulate"
     ],
 )
