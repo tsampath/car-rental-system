@@ -1,7 +1,6 @@
 from tabulate import tabulate
 
 from common.enums import CustomerType
-
 from rental_services.controllers.customer_controller import CustomerController
 
 class ManageCustomerEntry():
