@@ -8,7 +8,7 @@ class DB_Connection:
     _engine = None
     _Session = None
 
-    def __new__(cls, db_url="mysql+pymysql://rental_user:T&hvu2QM#%@172.104.141.142:3306/yoobee_car_rental"):
+    def __new__(cls, db_url="mysql+pymysql://rental_user:password@server_ip:3306/car_rental_db"):
         if cls._instance is None:
             cls._instance = super(DB_Connection, cls).__new__(cls)
             cls._engine = create_engine(
